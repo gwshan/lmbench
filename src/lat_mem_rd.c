@@ -61,9 +61,12 @@ main(int ac, char **av)
 		lmbench_usage(ac, av, usage);
 	}
 
+	fprintf(stdout, "%s: optind=%d\n", __func__, optind);
         len = atoi(av[optind]);
+	fprintf(stdout, "%s: len=%dMB\n", __func__, len);
 	len *= 1024 * 1024;
 
+	fprintf(stdout, "%s: optind=%d, ac-1=%d\n", __func__, optind, ac-1);
 	if (optind == ac - 1) {
 		fprintf(stderr, "\"stride=%d\n", STRIDE);
 		for (range = LOWER; range <= len; range = step(range)) {
@@ -119,6 +122,8 @@ loads(size_t len, size_t range, size_t stride,
 	struct mem_state state;
 
 	if (range < stride) return;
+	fprintf(stdout, "%s: len=%ld range=%ld stride=%ld parallel=%d warmup=%d repetitons=%d\n",
+		__func__, len, range, stride, parallel, warmup, repetitions);
 
 	state.width = 1;
 	state.len = range;
